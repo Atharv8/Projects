@@ -49,28 +49,32 @@ def processimage(image):
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("templates/index.html")
 
 
 @app.route("/image_extractor")
 def image_extractor():
-    return render_template("image_extractor.html")  # Render the image extractor page
+    return render_template(
+        "templates/image_extractor.html"
+    )  # Render the image extractor page
 
 
 @app.route("/video_extractor")
 def video_extractor():
-    return render_template("video_extractor.html")  # Render the video extractor page
+    return render_template(
+        "templates/video_extractor.html"
+    )  # Render the video extractor page
 
 
 @app.route("/upload_video", methods=["POST"])
 def upload_video():
     if "file" not in request.files:
-        return render_template("index.html", message="No file part")
+        return render_template("templates/index.html", message="No file part")
 
     file = request.files["file"]
 
     if file.filename == "":
-        return render_template("index.html", message="No selected file")
+        return render_template("templates/index.html", message="No selected file")
 
     if file:
         file_path = os.path.join("static/uploads", file.filename)
@@ -90,12 +94,12 @@ def upload_video():
 @app.route("/upload_image", methods=["POST"])
 def upload():
     if "file" not in request.files:
-        return render_template("index.html", message="No file part")
+        return render_template("templates/index.html", message="No file part")
 
     file = request.files["file"]
 
     if file.filename == "":
-        return render_template("index.html", message="No selected file")
+        return render_template("templates/index.html", message="No selected file")
 
     if file:
         npimg = numpy.fromstring(file.read(), numpy.uint8)
@@ -107,7 +111,7 @@ def upload():
             f.write(lis)
 
         return send_file(temp_file, as_attachment=True)
-    return render_template("index.html")
+    return render_template("templates/index.html")
 
 
 if __name__ == "__main__":
