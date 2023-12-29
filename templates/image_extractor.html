@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Extractor</title>
+    <!--<link rel="stylesheet" href="D:\projects\python\textandvideodetect\textdetect\static\style.css">-->
+    <style>
+        body{
+            animation: fadeInAnimation ease 2s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadeInAnimation {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fadein">
+        <center>
+        <h1>Image Extractor</h1>
+        <form method="post" action="/upload_image" enctype="multipart/form-data">
+            <input type="file" name="file"><br><br>
+            <input type="submit" value="upload"><br><br>
+            <button onclick="href('index.html')">Home</button>
+        </form>
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+        </center>
+    </div>
+</body>
+</html>

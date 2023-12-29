@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>video Extractor</title>
+    <!--<link rel="stylesheet" href="D:\projects\python\textandvideodetect\textdetect\static\style.css">-->
+    <style>
+        body{
+            animation: fadeInAnimation ease 2s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadeInAnimation {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fadein">
+        <center>
+        <h1>Video Extractor</h1>
+        <form method="post" action="/upload_video" enctype="multipart/form-data">
+            <input type="file" name="file"><br><br>
+            <input type="submit" value="upload" onclick="processVideo()"><br><br>
+            <button onclick="href('index.html')">Home</button>
+        </form>
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+        </center>
+    </div>
+    <script>
+        function processVideo() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/upload_video', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'processed_video.mp4';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            });
+        }
+    </script>
+</body>
+</html>
